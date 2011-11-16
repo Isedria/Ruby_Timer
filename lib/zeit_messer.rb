@@ -18,7 +18,7 @@ class ZeitMesser
   end
 
   def dauer
-    ((if @ende_zeit; @ende_zeit; else; Time.now;end)-@start_zeit).round
+    ((@ende_zeit ? @ende_zeit : Time.now) - @start_zeit).round
   end
 
   def info

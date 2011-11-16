@@ -18,10 +18,10 @@ class ZeitMesser
   end
 
   def dauer
-    if @ende_zeit.nil?
-       (Time.now - @start_zeit).round
-    else
+    if @ende_zeit
        ((@ende_zeit - @start_zeit)).round
+    else
+       (Time.now - @start_zeit).round
     end
   end
 

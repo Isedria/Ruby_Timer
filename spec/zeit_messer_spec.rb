@@ -107,7 +107,7 @@ describe ZeitMesser do
     a2 = Time.now
     @zm.start
 
-    sleep 3.1
+    sleep 2.1
     e2 = Time.now
     korrekte_dauer = (a2 - e2).to_i
     @zm.dauer.should == korrekte_dauer

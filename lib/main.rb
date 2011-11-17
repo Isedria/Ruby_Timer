@@ -2,50 +2,31 @@
 
 require 'zeit_messer'
 
-#puts"Timer"
-#print 'Um den Timer zu starten, tippen Sie "s" ein: '
-#
-#eingabe = gets.chomp
-zm = ZeitMesser.new
+zms = []
+
+3.times do |zm_nr|
+  zms[zm_nr] = ZeitMesser.new
+end
 
 loop do
   print 'Timer: '
-  eingabe = gets.chomp
-  if eingabe =~ /s|e|d|x/i
-      case eingabe
-      when "s" then puts zm.start
-      when "e" then puts zm.ende
-      when "d" then puts zm.dauer
-      end
+  eingabe_befehl = gets.chomp
+
+  if eingabe_befehl =~ /s|e|d|x|t/i
+    if eingabe_befehl == "t"
+      print "Timer - Nummer :"
+      eingabe_multi = gets.chomp
+    end
+
+    zm_nr = eingabe_multi.to_i
+  
+    case eingabe_befehl
+    when "s" then puts zms[zm_nr].start
+    when "e" then puts zms[zm_nr].ende
+    when "d" then puts zms[zm_nr].dauer
+    end
+
+    break if eingabe_befehl == "x"
   end
-  break if eingabe == "x"
 end
-
-#
-#
-#
-#if eingabe == "s"
-#  puts zm.start
-#else
-#  puts "falsche Eingabe!"
-#end
-#
-#print 'Um den Timer zu starten, tippen Sie "e" ein: '
-#
-#eingabe = gets.chomp
-#if eingabe == "e"
-#  puts zm.ende
-#else
-#  puts "falsche Eingabe!"
-#end
-#
-#print 'Um den Timer zu starten, tippen Sie "d" ein: '
-#
-#eingabe = gets.chomp
-#if eingabe == "d"
-#  puts zm.dauer
-#else
-#  puts "falsche Eingabe!"
-#end
-
 

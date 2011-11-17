@@ -8,6 +8,7 @@ zms = []
   zms[zm_nr] = ZeitMesser.new
 end
 
+zm_nr = 0
 loop do
   print 'Timer: '
   eingabe_befehl = gets.chomp
@@ -15,10 +16,9 @@ loop do
   if eingabe_befehl =~ /s|e|d|x|t/i
     if eingabe_befehl == "t"
       print "Timer - Nummer :"
-      eingabe_multi = gets.chomp
+      zm_nr = gets.to_i
     end
 
-    zm_nr = eingabe_multi.to_i
   
     case eingabe_befehl
     when "s" then puts zms[zm_nr].start

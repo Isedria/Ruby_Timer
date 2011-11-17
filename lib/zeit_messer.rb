@@ -9,6 +9,7 @@ class ZeitMesser
 
   def start
     @start_zeit = Time.now
+    @ende_zeit = nil
     "OK"
   end
 

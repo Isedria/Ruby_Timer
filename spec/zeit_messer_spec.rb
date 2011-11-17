@@ -93,6 +93,25 @@ describe ZeitMesser do
     @zm.ende.should == "OK"
   end
 
-  
+   it "sollte nach einem Neustart neuzählen" do
+    a = Time.now
+    @zm.start
+
+    sleep 1.1
+    e = Time.now
+    korrekte_dauer = (e - a).to_i
+    @zm.dauer.should == korrekte_dauer
+
+    @zm.ende
+
+    a2 = Time.now
+    @zm.start
+
+    sleep 3.1
+    e2 = Time.now
+    korrekte_dauer = (a2 - e2).to_i
+    @zm.dauer.should == korrekte_dauer
+
+  end
 end
 

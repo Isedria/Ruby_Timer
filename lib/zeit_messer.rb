@@ -19,7 +19,11 @@ class ZeitMesser
   end
 
   def dauer
-    ((@ende_zeit || Time.now) - @start_zeit).round
+    begin
+      ((@ende_zeit || Time.now) - @start_zeit).round
+    rescue
+      nil
+    end
   end
   def info
     "OK"

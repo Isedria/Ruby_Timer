@@ -111,7 +111,6 @@ describe ZeitMesser do
     e2 = Time.now
     korrekte_dauer = (e2 - a2).to_i
     @zm.dauer.should == korrekte_dauer
-
   end
 end
 

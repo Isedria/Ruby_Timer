@@ -21,15 +21,15 @@ loop do    #Hauptschleife
       case eingabe_befehl
       when "s" then puts zms[zm_nr].start
       when "e" then puts zms[zm_nr].ende
-      when "d" then puts zms[zm_nr].dauer
+      when "d" then puts zms[zm_nr].dauer_format
     #  when "p" then puts zms[zm_nr].pause
       when "i" then 
         10.times {|zeilen_nummer|
           print zeilen_nummer.to_s.center(2)
           print "|".center(5)
-          print zms[zeilen_nummer].dauer.to_s.center(10)
+          print zms[zeilen_nummer].dauer_format.to_s.center(10)
           print "|".center(5)
-          if zms[zeilen_nummer].dauer.nil?
+          if zms[zeilen_nummer].dauer_format.nil?
             print "Nicht Aktiv"
           else
             print "   Aktiv   "
@@ -51,4 +51,3 @@ loop do    #Hauptschleife
     end
   end
 end
-

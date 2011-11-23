@@ -12,6 +12,16 @@ describe ZeitMesser do
     @zm.start.should == "OK"
   end
 
+  it "sollte richtig formatieren" do
+    a = Time.now
+    @zm.start
+
+    sleep 2
+    e = Time.now
+    korrekte_dauer = (e - a).to_i
+    @zm.dauer_format.should == "00:00:02"
+  end
+  
   it "sollte bei kleinen Zeiten korrekte Dauer zurückgeben " do
     a = Time.now
     @zm.start

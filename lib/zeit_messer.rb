@@ -31,7 +31,7 @@ class ZeitMesser
     if dauer
       Time.at(dauer).utc.strftime(@timer_format)
     else
-      "--:--:--"
+      "- - : - - : - -"
     end
   end
 

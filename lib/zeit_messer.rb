@@ -40,3 +40,10 @@ class ZeitMesser
   end
 end
 
+class Abrechnung < ZeitMesser
+
+
+  def dauer_abrechnung
+    ((dauer / 900).round * 0.15)
+  end
+end

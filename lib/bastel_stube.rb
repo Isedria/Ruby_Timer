@@ -5,7 +5,12 @@ require 'Qt4'
 
 
 app = Qt::Application.new(ARGV)
-zm = ZeitMesser.new
+
+zms = []
+
+#10.times do |zm_nr|
+#  zms[zm_nr] = ZeitMesser.new
+#end
 
 begin
   haupt_fenster = Qt::Widget.new do
@@ -13,21 +18,22 @@ begin
     self.window_title = 'Timer v1.0'
     resize(200, 100)
 
-    zeilen_anz = 3
+    zeilen_anz = 10
 
     haupt_layout = Qt::VBoxLayout.new
 
-
-    zeilen_anz.times do
+    zms = []
+    zeilen_anz.times do |zm_nr|
+      zms[zm_nr] = ZeitMesser.new
       start_button = Qt::PushButton.new('Start') do
         connect(SIGNAL('clicked()')) do
-          puts zm.start
+          puts zms[zm_nr].start
         end
       end
 
       ende_button = Qt::PushButton.new('Ende') do
         connect(SIGNAL('clicked()')) do
-          puts zm.ende
+          puts zms[zm_nr].ende
         end
       end
 
@@ -35,8 +41,8 @@ begin
 
       dauer_button = Qt::PushButton.new('Dauer') do
         connect(SIGNAL('clicked()')) do
-          zeit_label.text = zm.dauer_format
-          puts zm.dauer_format
+          zeit_label.text = zms[zm_nr].dauer_format
+          puts zms[zm_nr].dauer_format
         end
       end
 
@@ -44,10 +50,10 @@ begin
 
 
       layout_horiz = Qt::HBoxLayout.new do
+        add_widget(zeit_label, 0, Qt::AlignLeft)
         add_widget(start_button, 0, Qt::AlignLeft)
         add_widget(ende_button, 0, Qt::AlignLeft)
         add_widget(dauer_button, 0, Qt::AlignLeft)
-        add_widget(zeit_label, 0, Qt::AlignLeft)
       end
       haupt_layout.add_layout(layout_horiz)
     end

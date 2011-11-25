@@ -12,6 +12,11 @@ describe ZeitMesser do
     @zm.start.should == "OK"
   end
 
+  it "sollte bei ungestartetem Zeitmesser nicht abstürzen" do
+    a = Time.now
+    @zm.dauer_format.should be_a String
+  end
+
   it "sollte richtig formatieren" do
     a = Time.now
     @zm.start

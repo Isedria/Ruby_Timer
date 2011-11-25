@@ -28,7 +28,11 @@ class ZeitMesser
   end
 
   def dauer_format
-    Time.at((@ende_zeit || Time.now) - @start_zeit).utc.strftime(@timer_format)
+    if dauer
+      Time.at(dauer).utc.strftime(@timer_format)
+    else
+      "--:--:--"
+    end
   end
 
   def info

@@ -6,12 +6,6 @@ require 'Qt4'
 
 app = Qt::Application.new(ARGV)
 
-zms = []
-
-#10.times do |zm_nr|
-#  zms[zm_nr] = ZeitMesser.new
-#end
-
 begin
   haupt_fenster = Qt::Widget.new do
 
@@ -25,9 +19,20 @@ begin
     zms = []
     zeilen_anz.times do |zm_nr|
       zms[zm_nr] = ZeitMesser.new
+
+      zeit_label = Qt::Label.new('00:00:00')
+      
+      zeit_anzeige = Qt::Timer.new(self) do
+        connect(SIGNAL("timeout()")) do
+          zeit_label.text = zms[zm_nr].dauer_format
+        end
+        self.start(1000)
+      end
+      
       start_button = Qt::PushButton.new('Start') do
         connect(SIGNAL('clicked()')) do
           puts zms[zm_nr].start
+          puts zeit_anzeige
         end
       end
 
@@ -37,17 +42,12 @@ begin
         end
       end
 
-      zeit_label = Qt::Label.new('00:00:00')
-
       dauer_button = Qt::PushButton.new('Dauer') do
         connect(SIGNAL('clicked()')) do
           zeit_label.text = zms[zm_nr].dauer_format
           puts zms[zm_nr].dauer_format
         end
       end
-
-
-
 
       layout_horiz = Qt::HBoxLayout.new do
         add_widget(zeit_label, 0, Qt::AlignLeft)
@@ -57,8 +57,6 @@ begin
       end
       haupt_layout.add_layout(layout_horiz)
     end
-
-
 
     self.layout = haupt_layout
   end

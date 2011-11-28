@@ -69,27 +69,38 @@ begin
         end
       end
 
+#      icon = Qt::Icon.new
+#      icon.addPixmap(Qt::Pixmap.new(":/icon_coffee.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
+
       zureuck_button = Qt::PushButton.new('B') do
         connect(SIGNAL('clicked()')) do
-
         end
       end
 
-      kaffee_button = Qt::PushButton.new('C') do
+      kaffee_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
           puts kaffee_anzahl.text = abr[zm_nr].kaffee_anzahl_berechnung
         end
       end
 
-      getraenke_button = Qt::PushButton.new('G') do
+      getraenke_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
         end
       end
 
-      kopie_button = Qt::PushButton.new('K') do
+      kopie_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
         end
       end
+
+      #icons
+      icon = Qt::Icon.new
+      icon.addPixmap(Qt::Pixmap.new("icon_coffee.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
+      kaffee_button.icon = icon
+      icon.addPixmap(Qt::Pixmap.new("icon_coke.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
+      getraenke_button.icon = icon
+      icon.addPixmap(Qt::Pixmap.new("icon_print.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
+      kopie_button.icon = icon
 
 
       # Layouts
@@ -97,7 +108,6 @@ begin
       hlayout_timer_nummer = Qt::HBoxLayout.new do
         add_widget(timer_nummer, 0, Qt::AlignLeft)
       end
-
 
       hlayout_timer_show = Qt::HBoxLayout.new do
         add_widget(zeit_label, 0, Qt::AlignCenter)

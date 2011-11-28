@@ -19,6 +19,15 @@ class ZeitMesser
     "OK"
   end
 
+  def pause
+    @ende_zeit = Time.now
+  end
+
+  def weiter
+    @start_zeit = Time.now - dauer
+    @ende_zeit = nil
+  end
+
   def dauer
     begin
       ((@ende_zeit || Time.now) - @start_zeit).round
@@ -34,10 +43,6 @@ class ZeitMesser
       "- - : - - : - -"
     end
   end
-
-  def pause
-    
-  end
 end
 
 class ZeitMesserMitAbrechnung < ZeitMesser
@@ -50,7 +55,7 @@ class ZeitMesserMitAbrechnung < ZeitMesser
   end
 
   def kaffee_anzahl_berechnung
- 
   end
+
 
 end

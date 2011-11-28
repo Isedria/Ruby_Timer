@@ -13,18 +13,10 @@ begin
     resize(200, 100)
 
     zeilen_anz = 10
-
-    zeit_nummer_layout = Qt::VBoxLayout.new()
-    zeit_anzeige_layout = Qt::VBoxLayout.new()
-    haupt_buttons_layout = Qt::VBoxLayout.new()
-    ZeitMesserMitAbrechnungs_anzeige_layout = Qt::VBoxLayout.new()
+    
     extra_buttons_layout = Qt::VBoxLayout.new()
 
-    haupt_layout = Qt::HBoxLayout.new do
-      add_layout zeit_nummer_layout
-      add_layout zeit_anzeige_layout
-      add_layout haupt_buttons_layout
-      add_layout ZeitMesserMitAbrechnungs_anzeige_layout
+    haupt_layout = Qt::VBoxLayout.new do
       add_layout extra_buttons_layout
     end
 
@@ -52,16 +44,17 @@ begin
       end
 
       start_button = Qt::PushButton.new('Start') do
-        connect(SIGNAL('clicked()')) do
+       connect(SIGNAL('clicked()')) do
          puts abr[zm_nr].start
          puts zeit_anzeige
          start_button.text = 'Pause'
-         connect(SIGNAL('clicked()')) do
-           puts abr[zm_nr].ende
-           start_button.text = 'Start'
-         end
+       end
+#       connect(SIGNAL('clicked()')) do
+#         puts abr[zm_nr].pause
+#         start_button.text = 'Start'
+#       end
         end
-      end
+     # end
 
       ende_button = Qt::PushButton.new('Ende') do
         connect(SIGNAL('clicked()')) do
@@ -132,11 +125,15 @@ begin
         add_widget(kopie_anzahl, 0, Qt::AlignCenter)
       end
 
-      zeit_nummer_layout.add_layout(hlayout_timer_nummer)
-      zeit_anzeige_layout.add_layout(hlayout_timer_show)
-      haupt_buttons_layout.add_layout(hlayout_timer_buttons)
-      ZeitMesserMitAbrechnungs_anzeige_layout.add_layout(hlayout_money_show)
-      extra_buttons_layout.add_layout(hlayout_extra_buttons)
+      vlayout_second = Qt::HBoxLayout.new do
+        add_layout(hlayout_timer_nummer)
+        add_layout(hlayout_timer_show)
+        add_layout(hlayout_timer_buttons)
+        add_layout(hlayout_money_show)
+        add_layout(hlayout_extra_buttons)
+      end
+
+      extra_buttons_layout.add_layout(vlayout_second)
     end
 
     self.layout = haupt_layout

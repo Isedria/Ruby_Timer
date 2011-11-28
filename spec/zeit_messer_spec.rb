@@ -11,7 +11,7 @@ describe Abrechnung do
   it "sollte richtig abrechnen" do
     @ab.start
     sleep 12
-    @ab.dauer_abrechnung.should == 0.15
+    @ab.dauer_abrechnung.should == 0.30
   end
 end
 #

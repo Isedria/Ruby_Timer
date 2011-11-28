@@ -3,15 +3,15 @@
 
 require 'zeit_messer'
 
-describe Abrechnung do
+describe ZeitMesserMitAbrechnung do
   before(:each) do
-    @ab = Abrechnung.new
+    @ab = ZeitMesserMitAbrechnung.new
   end
 
   it "sollte richtig abrechnen" do
     @ab.start
     sleep 12
-    @ab.dauer_abrechnung.should == 0.30
+    @ab.dauer_ZeitMesserMitAbrechnung.should == "0.30 €"
   end
 end
 #

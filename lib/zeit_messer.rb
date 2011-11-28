@@ -35,25 +35,22 @@ class ZeitMesser
     end
   end
 
-  def dauer_abrechnung # Zweistellige Gleitkommazahl sowie unter 15 Minuten sofort einmalige Abrechnung fehlen! "%.f2"
-    if dauer
-      ((dauer / 5).round * 0.15).to_s + " €"
-    else
-      "0,00 €"
-    end
-  end
-
   def pause
     
   end
 end
 
-class Abrechnung < ZeitMesser
-#  def dauer_abrechnung
-#    if dauer
-#      ((dauer / 5).round * 0.15)
-#    else
-#      "0,test"
-#    end
-#  end
+class ZeitMesserMitAbrechnung < ZeitMesser
+  def dauer_ZeitMesserMitAbrechnung
+    if dauer
+      "%.2f €" % ((dauer / 5).round * 0.15)
+    else
+      "0,00 €"
+    end
+  end
+
+  def kaffee_anzahl_berechnung
+ 
+  end
+
 end

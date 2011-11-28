@@ -17,23 +17,20 @@ begin
     zeit_nummer_layout = Qt::VBoxLayout.new()
     zeit_anzeige_layout = Qt::VBoxLayout.new()
     haupt_buttons_layout = Qt::VBoxLayout.new()
-    abrechnungs_anzeige_layout = Qt::VBoxLayout.new()
+    ZeitMesserMitAbrechnungs_anzeige_layout = Qt::VBoxLayout.new()
     extra_buttons_layout = Qt::VBoxLayout.new()
 
     haupt_layout = Qt::HBoxLayout.new do
       add_layout zeit_nummer_layout
       add_layout zeit_anzeige_layout
       add_layout haupt_buttons_layout
-      add_layout abrechnungs_anzeige_layout
+      add_layout ZeitMesserMitAbrechnungs_anzeige_layout
       add_layout extra_buttons_layout
     end
 
-
-    zms = []
     abr = []
     zeilen_anz.times do |zm_nr|
-      zms[zm_nr] = ZeitMesser.new
-      abr[zm_nr] = Abrechnung.new
+      abr[zm_nr] = ZeitMesserMitAbrechnung.new
 
 
       ## Label
@@ -48,45 +45,39 @@ begin
       #Buttons
       zeit_anzeige = Qt::Timer.new(self) do
         connect(SIGNAL("timeout()")) do
-          zeit_label.text = zms[zm_nr].dauer_format
-          money_label.text = zms[zm_nr].dauer_abrechnung
+          zeit_label.text = abr[zm_nr].dauer_format
+          money_label.text = abr[zm_nr].dauer_ZeitMesserMitAbrechnung
         end
         self.start(1000)
       end
 
       start_button = Qt::PushButton.new('Start') do
         connect(SIGNAL('clicked()')) do
-         puts zms[zm_nr].start
+         puts abr[zm_nr].start
          puts zeit_anzeige
          start_button.text = 'Pause'
          connect(SIGNAL('clicked()')) do
+           puts abr[zm_nr].ende
            start_button.text = 'Start'
          end
         end
       end
 
-
-
       ende_button = Qt::PushButton.new('Ende') do
         connect(SIGNAL('clicked()')) do
-          puts zms[zm_nr].ende
-        end
-      end
-
-      dauer_button = Qt::PushButton.new('Dauer') do
-        connect(SIGNAL('clicked()')) do
-          zeit_label.text = zms[zm_nr].dauer_format
-          puts zms[zm_nr].dauer_format
+          puts abr[zm_nr].ende
         end
       end
 
       zureuck_button = Qt::PushButton.new('B') do
         connect(SIGNAL('clicked()')) do
+
         end
       end
 
       kaffee_button = Qt::PushButton.new('C') do
         connect(SIGNAL('clicked()')) do
+          puts kaffee_anzahl.text = abr[zm_nr].kaffee_anzahl_berechnung
         end
       end
 
@@ -99,9 +90,6 @@ begin
         connect(SIGNAL('clicked()')) do
         end
       end
-
-
-
 
 
       # Layouts
@@ -118,7 +106,6 @@ begin
       hlayout_timer_buttons = Qt::HBoxLayout.new do
         add_widget(start_button, 0, Qt::AlignLeft)
         add_widget(ende_button, 0, Qt::AlignLeft)
-        add_widget(dauer_button, 0, Qt::AlignLeft)
       end
 
       hlayout_money_show = Qt::HBoxLayout.new do
@@ -128,17 +115,17 @@ begin
       hlayout_extra_buttons = Qt::HBoxLayout.new do
         add_widget(zureuck_button, 0, Qt::AlignCenter)
         add_widget(kaffee_button, 0, Qt::AlignCenter)
-        add_widget(getraenke_button, 0, Qt::AlignCenter)
-        add_widget(kopie_button, 0, Qt::AlignCenter)
         add_widget(kaffee_anzahl, 0, Qt::AlignCenter)
+        add_widget(getraenke_button, 0, Qt::AlignCenter)
         add_widget(getraenke_anzahl, 0, Qt::AlignCenter)
+        add_widget(kopie_button, 0, Qt::AlignCenter)    
         add_widget(kopie_anzahl, 0, Qt::AlignCenter)
       end
 
       zeit_nummer_layout.add_layout(hlayout_timer_nummer)
       zeit_anzeige_layout.add_layout(hlayout_timer_show)
       haupt_buttons_layout.add_layout(hlayout_timer_buttons)
-      abrechnungs_anzeige_layout.add_layout(hlayout_money_show)
+      ZeitMesserMitAbrechnungs_anzeige_layout.add_layout(hlayout_money_show)
       extra_buttons_layout.add_layout(hlayout_extra_buttons)
     end
 

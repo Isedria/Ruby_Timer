@@ -44,17 +44,36 @@ begin
       end
 
       start_button = Qt::PushButton.new('Start') do
-       connect(SIGNAL('clicked()')) do
-         puts abr[zm_nr].start
-         puts zeit_anzeige
-         start_button.text = 'Pause'
-       end
-#       connect(SIGNAL('clicked()')) do
-#         puts abr[zm_nr].pause
-#         start_button.text = 'Start'
-#       end
+        connect(SIGNAL('clicked()')) do
+          txt = start_button.text
+          puts abr[zm_nr].send(txt.downcase)
+
+          next_txt = case txt
+          when 'Start'  then 'Pause'
+          when 'Pause'  then 'Weiter'
+          when 'Weiter' then 'Pause'
+          end
+          start_button.text = next_txt
+#          if start_button.text == 'Start'
+#            puts abr[zm_nr].start
+#            puts zeit_anzeige
+#            start_button.text = 'Pause'
+#          elsif start_button.text == 'Pause'
+#            puts abr[zm_nr].pause
+#            puts zeit_anzeige
+#            start_button.text = 'Weiter'
+#          elsif start_button.text == 'Weiter'
+#            puts abr[zm_nr].weiter
+#            puts zeit_anzeige
+#            start_button.text = 'Start'
+#          end
         end
-     # end
+        #         if start_button == 'Pause'
+        #         puts abr[zm_nr].pause
+        #         start_button.text = 'Start'
+        #       end
+      end
+
 
       ende_button = Qt::PushButton.new('Ende') do
         connect(SIGNAL('clicked()')) do
@@ -62,8 +81,8 @@ begin
         end
       end
 
-#      icon = Qt::Icon.new
-#      icon.addPixmap(Qt::Pixmap.new(":/icon_coffee.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
+      #      icon = Qt::Icon.new
+      #      icon.addPixmap(Qt::Pixmap.new(":/icon_coffee.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
 
       zureuck_button = Qt::PushButton.new('B') do
         connect(SIGNAL('clicked()')) do

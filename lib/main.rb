@@ -17,13 +17,14 @@ loop do    #Hauptschleife
     eingabe_befehl, zm_nr = eingabe_kombi.split("", 2)
     zm_nr = (zm_nr=="") ? standard_nr : zm_nr.to_i
 
-    if eingabe_befehl =~ /[sedpwxi]/i
+    if eingabe_befehl =~ /[sedpwkxi]/i
       case eingabe_befehl
       when "s" then puts abr[zm_nr].start
       when "e" then puts abr[zm_nr].stop
       when "d" then puts abr[zm_nr].dauer_format
       when "p" then puts abr[zm_nr].pause
       when "w" then puts abr[zm_nr].weiter
+      when "k" then puts abr[zm_nr].weiter
       when "i" then 
         10.times {|zeilen_nummer|
           print zeilen_nummer.to_s.center(2)

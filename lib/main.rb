@@ -5,7 +5,7 @@ require 'zeit_messer'
 abr = []
 
 10.times do |zm_nr|
-  abr[zm_nr] = ZeitMesserMitAbrechnung.new
+  abr[zm_nr] = Abrechnungen.new
 end
 
 

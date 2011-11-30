@@ -8,19 +8,37 @@ class ZeitMesser
     @timer_format = "%H:%M:%S"
   end
 
+  attr_reader :zustand
+  # nil, :gestartet, :pause, :gestoppt
+
   def start
     @start_zeit = Time.now
     @ende_zeit = nil
+    @zustand = :gestartet
     "OK"
   end
 
   def stop
     @ende_zeit = Time.now
+    @zustand = :gestoppt
     "OK"
   end
 
   def pause
     @ende_zeit = Time.now
+    @zustand = :pause
+  end
+
+  def weiter
+    @start_zeit = Time.now - dauer_ungerundet
+    @ende_zeit = nil
+    @zustand = :gestartet
+  end
+
+  def reset
+    @start_zeit = nil
+    @ende_zeit = nil
+    @zustand = nil
   end
 
   private
@@ -29,10 +47,6 @@ class ZeitMesser
   end
 
   public
-  def weiter
-    @start_zeit = Time.now - dauer_ungerundet
-    @ende_zeit = nil
-  end
 
   def dauer
     begin
@@ -42,11 +56,6 @@ class ZeitMesser
     end
   end
 
-
-  def reset
-    @start_zeit = nil
-    @ende_zeit = nil
-  end
 
   def dauer_format
     if dauer

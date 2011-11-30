@@ -57,23 +57,3 @@ class ZeitMesser
   end
 end
 
-class ZeitMesserMitAbrechnung < ZeitMesser
-  attr_reader :kaffee_anzahl
-  
-  def initialize
-    @kaffee_anzahl = 0
-  end
-  
-  def dauer_abrechnung
-    if dauer
-      "%.2f €" % ((dauer / 5).round * 0.15)
-    else
-      "0,00 €"
-    end
-  end
-
-  def neuer_kaffee
-    @kaffee_anzahl += 1
-  end
-
-end

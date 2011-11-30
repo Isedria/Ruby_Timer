@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zeit_messer'
+require 'zeit_messer_mit_abrechnung'
 require 'Qt4'
 
 
@@ -40,7 +40,7 @@ begin
           zeit_label.text = abr[zm_nr].dauer_format
           money_label.text = abr[zm_nr].dauer_abrechnung
         end
-        self.start(1000)
+        self.start(200)
       end
 
       start_button = Qt::PushButton.new('Start') do
@@ -77,7 +77,9 @@ begin
 
       kaffee_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
-          puts kaffee_anzahl.text + abr[zm_nr].kaffee_anzahl_berechnung
+          puts abr[zm_nr].kaffee_anzahl.to_s
+          abr[zm_nr].neuer_kaffee
+          kaffee_anzahl.text = abr[zm_nr].kaffee_anzahl.to_s
         end
       end
 

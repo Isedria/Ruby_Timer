@@ -22,7 +22,7 @@ describe ZeitMesser do
 #  end
 
   it "sollte Pause mchen können" do
-    0.times do
+    1.times do
       @zm.start
       @zm.dauer.should == 0
       sleep 1.2
@@ -51,7 +51,7 @@ describe ZeitMesser do
   end
 
   it "sollte richtig formatieren" do
-    0.times do
+    1.times do
       a = Time.now
       @zm.start
 
@@ -84,7 +84,7 @@ describe ZeitMesser do
   end
 
   it "sollte korrekte Dauer zurückgeben wenn er von Anfang an läuft" do
-    0.times do
+    1.times do
       a = Time.now
       @zm.start
 
@@ -105,7 +105,7 @@ describe ZeitMesser do
   end
 
   it "sollte die Dauer nicht weiterzählen, wenn gestoppt" do
-    0.times do
+    1.times do
       a = Time.now
       @zm.start
 
@@ -123,7 +123,7 @@ describe ZeitMesser do
   end
 
   it "sollte erst anfangen zu zählen, wenn gestartet" do
-    0.times do
+    1.times do
       sleep 1.1
 
       a = Time.now
@@ -145,7 +145,7 @@ describe ZeitMesser do
   end
 
    it "sollte nach einem Neustart neuzählen" do
-    0.times do
+    1.times do
       a = Time.now
       @zm.start
 

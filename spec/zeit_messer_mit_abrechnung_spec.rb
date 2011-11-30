@@ -1,7 +1,7 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-require 'zeit_messer'
+require 'zeit_messer_mit_abrechnung'
 
 describe ZeitMesserMitAbrechnung do
   before(:each) do
@@ -29,6 +29,12 @@ describe ZeitMesserMitAbrechnung do
     @ab.stop
     @ab.neuer_kaffee
     @ab.kaffee_anzahl.should == 2
+  end
+
+  it "sollte immer noch formatiert ausgeben können" do
+      @ab.start
+      sleep 2
+      @ab.dauer_format.should == "00:00:02"
   end
 end
 

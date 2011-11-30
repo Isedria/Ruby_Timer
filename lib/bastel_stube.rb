@@ -85,11 +85,17 @@ begin
 
       getraenke_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
+          puts abr[zm_nr].getraenke_anzahl.to_s
+          abr[zm_nr].neues_getraenk
+          getraenke_anzahl.text = abr[zm_nr].getraenke_anzahl.to_s
         end
       end
 
       kopie_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
+          puts abr[zm_nr].kopie_anzahl.to_s
+          abr[zm_nr].neue_kopie
+          kopie_anzahl.text = abr[zm_nr].kopie_anzahl.to_s
         end
       end
 

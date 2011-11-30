@@ -2,10 +2,10 @@
 
 require 'zeit_messer'
 
-zms = []
+abr = []
 
 10.times do |zm_nr|
-  zms[zm_nr] = ZeitMesser.new
+  abr[zm_nr] = ZeitMesserMitAbrechnung.new
 end
 
 
@@ -17,19 +17,20 @@ loop do    #Hauptschleife
     eingabe_befehl, zm_nr = eingabe_kombi.split("", 2)
     zm_nr = (zm_nr=="") ? standard_nr : zm_nr.to_i
 
-    if eingabe_befehl =~ /[sedpxi]/i
+    if eingabe_befehl =~ /[sedpwxi]/i
       case eingabe_befehl
-      when "s" then puts zms[zm_nr].start
-      when "e" then puts zms[zm_nr].ende
-      when "d" then puts zms[zm_nr].dauer_format
-    #  when "p" then puts zms[zm_nr].pause
+      when "s" then puts abr[zm_nr].start
+      when "e" then puts abr[zm_nr].stop
+      when "d" then puts abr[zm_nr].dauer_format
+      when "p" then puts abr[zm_nr].pause
+      when "w" then puts abr[zm_nr].weiter
       when "i" then 
         10.times {|zeilen_nummer|
           print zeilen_nummer.to_s.center(2)
           print "|".center(5)
-          print zms[zeilen_nummer].dauer_format.to_s.center(10)
+          print abr[zeilen_nummer].dauer_format.to_s.center(10)
           print "|".center(5)
-          if zms[zeilen_nummer].dauer_format.nil?
+          if abr[zeilen_nummer].dauer_format.nil?
             print "Nicht Aktiv"
           else
             print "   Aktiv   "

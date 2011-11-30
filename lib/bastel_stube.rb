@@ -38,7 +38,7 @@ begin
       zeit_anzeige = Qt::Timer.new(self) do
         connect(SIGNAL("timeout()")) do
           zeit_label.text = abr[zm_nr].dauer_format
-          money_label.text = abr[zm_nr].dauer_ZeitMesserMitAbrechnung
+          money_label.text = abr[zm_nr].dauer_abrechnung
         end
         self.start(1000)
       end
@@ -54,35 +54,21 @@ begin
           when 'Weiter' then 'Pause'
           end
           start_button.text = next_txt
-#          if start_button.text == 'Start'
-#            puts abr[zm_nr].start
-#            puts zeit_anzeige
-#            start_button.text = 'Pause'
-#          elsif start_button.text == 'Pause'
-#            puts abr[zm_nr].pause
-#            puts zeit_anzeige
-#            start_button.text = 'Weiter'
-#          elsif start_button.text == 'Weiter'
-#            puts abr[zm_nr].weiter
-#            puts zeit_anzeige
-#            start_button.text = 'Start'
-#          end
-        end
-        #         if start_button == 'Pause'
-        #         puts abr[zm_nr].pause
-        #         start_button.text = 'Start'
-        #       end
-      end
-
-
-      ende_button = Qt::PushButton.new('Ende') do
-        connect(SIGNAL('clicked()')) do
-          puts abr[zm_nr].ende
         end
       end
 
-      #      icon = Qt::Icon.new
-      #      icon.addPixmap(Qt::Pixmap.new(":/icon_coffee.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
+      ende_button = Qt::PushButton.new('Stop') do
+         connect(SIGNAL('clicked()')) do
+          txt = start_button.text
+          puts abr[zm_nr].send(txt.downcase)
+
+          next_txt = case txt
+          when 'Stop'  then 'Reset'
+          when 'Reset'  then 'Stop'
+          end
+          start_button.text = next_txt
+        end
+      end
 
       zureuck_button = Qt::PushButton.new('B') do
         connect(SIGNAL('clicked()')) do
@@ -91,7 +77,7 @@ begin
 
       kaffee_button = Qt::PushButton.new do
         connect(SIGNAL('clicked()')) do
-          puts kaffee_anzahl.text = abr[zm_nr].kaffee_anzahl_berechnung
+          puts kaffee_anzahl.text + abr[zm_nr].kaffee_anzahl_berechnung
         end
       end
 

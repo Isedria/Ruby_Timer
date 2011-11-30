@@ -14,7 +14,7 @@ class ZeitMesser
     "OK"
   end
 
-  def ende
+  def stop
     @ende_zeit = Time.now
     "OK"
   end
@@ -23,17 +23,29 @@ class ZeitMesser
     @ende_zeit = Time.now
   end
 
+  private
+  def dauer_ungerundet
+    ((@ende_zeit || Time.now) - @start_zeit)
+  end
+
+  public
   def weiter
-    @start_zeit = Time.now - dauer
+    @start_zeit = Time.now - dauer_ungerundet
     @ende_zeit = nil
   end
 
   def dauer
     begin
-      ((@ende_zeit || Time.now) - @start_zeit).round
+      dauer_ungerundet.round
     rescue
       nil
     end
+  end
+
+
+  def reset
+    @start_zeit = nil
+    @ende_zeit = nil
   end
 
   def dauer_format
@@ -46,7 +58,7 @@ class ZeitMesser
 end
 
 class ZeitMesserMitAbrechnung < ZeitMesser
-  def dauer_ZeitMesserMitAbrechnung
+  def dauer_abrechnung
     if dauer
       "%.2f €" % ((dauer / 5).round * 0.15)
     else
@@ -54,8 +66,11 @@ class ZeitMesserMitAbrechnung < ZeitMesser
     end
   end
 
+  @anzahl = 0
+
   def kaffee_anzahl_berechnung
+    if
+      @anzahl += 1
+    end
   end
-
-
 end

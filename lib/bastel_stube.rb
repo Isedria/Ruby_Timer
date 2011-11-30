@@ -34,7 +34,7 @@ begin
       zeit_anzeige = Qt::Timer.new(self) do
         connect(SIGNAL("timeout()")) do
           zeit_label.text = abrechnungen.dauer_format
-          money_label.text = abrechnungen.aktueller_preis
+          money_label.text = "%.2f €" % abrechnungen.aktueller_preis
         end
         self.start(200)
       end
@@ -49,7 +49,7 @@ begin
           when 'Pause'  then 'Weiter'
           when 'Weiter' then 'Pause'
           end
-          
+          # oder so:
           next_txt = {
             'Start'   => 'Pause',
             'Pause'   => 'Weiter',
@@ -81,28 +81,33 @@ begin
         add_widget(zureuck_button, 0, Qt::AlignCenter)
       end
 
-      zaehl_button = {}
+      #icons
+      icon = Qt::Icon.new
+
       Abrechnungen::ARTIKEL_ARTEN.each do |artikel_art|
         zaehl_label = Qt::Label.new('0')
-        zaehl_button[artikel_art] = Qt::PushButton.new do
+        zaehl_button = Qt::PushButton.new do
           connect(SIGNAL('clicked()')) do
             abrechnungen.benutzer_nimmt(artikel_art)
             zaehl_label.text = abrechnungen.anzahl_genommen(artikel_art).to_s
           end
         end
 
-        hlayout_extra_buttons.add_widget(zaehl_button[artikel_art], 0, Qt::AlignCenter)
+        icon_dateiname = {
+          :kaffee   => "icon_coffee.xpm",
+          :getraenk => "coke.xpm",
+          :kopie    => "icon_print.xpm"
+        }[artikel_art]
+        if icon_dateiname
+          icon.addPixmap(Qt::Pixmap.new("icons/"+icon_dateiname), Qt::Icon::Normal, Qt::Icon::Off)
+        end
+        zaehl_button.icon = icon
+
+        hlayout_extra_buttons.add_widget(zaehl_button, 0, Qt::AlignCenter)
         hlayout_extra_buttons.add_widget(zaehl_label, 0, Qt::AlignCenter)
       end
 
-      #icons
-      icon = Qt::Icon.new
-      icon.addPixmap(Qt::Pixmap.new("icon_coffee.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
-      zaehl_button[:kaffee].icon = icon
-      icon.addPixmap(Qt::Pixmap.new("icon_coke.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
-      zaehl_button[:getraenk].icon = icon
-      icon.addPixmap(Qt::Pixmap.new("icon_print.xpm"), Qt::Icon::Normal, Qt::Icon::Off)
-      zaehl_button[:kopie].icon = icon
+
 
 
       # Layouts

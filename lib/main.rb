@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'zeit_messer'
+require 'abrechnungen'
 
 abr = []
 
@@ -8,6 +8,15 @@ abr = []
   abr[zm_nr] = Abrechnungen.new
 end
 
+puts "s = start"
+puts "e = stop"
+puts "d = dauer"
+puts "p = pause"
+puts "w = weiter"
+puts "z = zeit - berechnung"
+puts "c = getraenk nehmen"
+puts "g = gesamtpreis"
+puts "a = statistikspeicherung"
 
 standard_nr = 1
 loop do    #Hauptschleife
@@ -17,14 +26,20 @@ loop do    #Hauptschleife
     eingabe_befehl, zm_nr = eingabe_kombi.split("", 2)
     zm_nr = (zm_nr=="") ? standard_nr : zm_nr.to_i
 
-    if eingabe_befehl =~ /[sedpwkxi]/i
+    if eingabe_befehl =~ /[sedpwxiazcg]/i
       case eingabe_befehl
       when "s" then puts abr[zm_nr].start
       when "e" then puts abr[zm_nr].stop
       when "d" then puts abr[zm_nr].dauer_format
       when "p" then puts abr[zm_nr].pause
       when "w" then puts abr[zm_nr].weiter
-      when "k" then puts abr[zm_nr].weiter
+      when "z" then puts abr[zm_nr].zeit_berechnungen
+      when "c" then puts abr[zm_nr].benutzer_nimmt(:kaffee)
+      when "g" then puts abr[zm_nr].aktueller_preis
+      when "a" then
+        10.times {|zeilen_nummer|
+          puts abr[zeilen_nummer].statistik_ausgabe
+        }
       when "i" then 
         10.times {|zeilen_nummer|
           print zeilen_nummer.to_s.center(2)

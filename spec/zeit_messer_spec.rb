@@ -38,8 +38,12 @@ describe ZeitMesser do
       @zm.dauer.should == 2
     end
   end
+end
 
-
+describe ZeitMesser do
+  before(:each) do
+    @zm = ZeitMesser.new
+  end
 
   it "sollte starten" do
     @zm.start.should == "OK"

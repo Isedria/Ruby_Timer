@@ -20,10 +20,8 @@ begin
       add_layout extra_buttons_layout
     end
 
-    abr = []
     zeilen_anz.times do |zm_nr|
       abrechnungen = Abrechnungen.new
-
 
       ## Label
       money_label = Qt::Label.new("0,00 €")
@@ -44,12 +42,6 @@ begin
           txt = start_button.text
           puts abrechnungen.send(txt.downcase)
 
-          next_txt = case txt
-          when 'Start'  then 'Pause'
-          when 'Pause'  then 'Weiter'
-          when 'Weiter' then 'Pause'
-          end
-          # oder so:
           next_txt = {
             'Start'   => 'Pause',
             'Pause'   => 'Weiter',
@@ -69,6 +61,9 @@ begin
           when 'Reset'  then 'Stop'
           end
           ende_button.text = next_txt
+          File.open("daten.txt", File::RDWR + File::APPEND) do |file|
+            file.puts "Kosten: #{'%5.2f' % abrechnungen.aktueller_preis}"
+          end
         end
       end
 
@@ -107,11 +102,7 @@ begin
         hlayout_extra_buttons.add_widget(zaehl_label, 0, Qt::AlignCenter)
       end
 
-
-
-
-      # Layouts
-      
+      # Layouts  
       hlayout_timer_nummer = Qt::HBoxLayout.new do
         add_widget(timer_nummer, 0, Qt::AlignLeft)
       end

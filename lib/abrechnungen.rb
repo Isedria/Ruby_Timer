@@ -6,7 +6,7 @@ class Abrechnungen < ZeitMesser
 
   attr_reader :kaffee_anzahl, :getraenke_anzahl, :kopie_anzahl
 
-  ARTIKEL_ARTEN = [:kaffee, :getraenk, :kopie, :coke]
+  ARTIKEL_ARTEN = [:kaffee, :getraenk, :kopie]
 
   def initialize
     super
@@ -14,13 +14,11 @@ class Abrechnungen < ZeitMesser
       :kaffee => 0,
       :kopie => 0,
       :getraenk => 0,
-      :coke => 0
     }
     @artikel_preise = {
       :kaffee => 0.50,
       :kopie => 0.15,
       :getraenk => 1.30,
-      :coke => 33.30
     }
   end
 
@@ -50,5 +48,11 @@ class Abrechnungen < ZeitMesser
       summe += artikel_berechnungen(artikel)
     end
     zeit_berechnungen  + summe
+  end
+
+  def statistik_ausgabe
+    File.open("daten_konsole.txt", File::RDWR + File::APPEND) do |file|
+      file.puts "#{'%5.2f' % aktueller_preis}"
+    end
   end
 end

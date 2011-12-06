@@ -49,10 +49,4 @@ class Abrechnungen < ZeitMesser
     end
     zeit_berechnungen  + summe
   end
-
-  def statistik_ausgabe
-    File.open("daten_konsole.txt", File::RDWR + File::APPEND) do |file|
-      file.puts "#{'%5.2f' % aktueller_preis}"
-    end
-  end
 end

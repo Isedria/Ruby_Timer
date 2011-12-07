@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'abrechnung'
+require 'abrechnungen'
 require 'datenspeicher'
 require 'Qt4'
 
@@ -22,8 +22,9 @@ begin
     end
 
     zeilen_anz.times do |zm_nr|
-      abrechnungen = Abrechnung.new
+      abrechnungen = Abrechnungen.new
       datenspeicherung = Datenspeicher.new
+
 
       ## Label
       money_label = Qt::Label.new("0,00 €")
@@ -60,13 +61,11 @@ begin
 
           next_txt = case txt
           when 'Stop'  then 'Reset'
+          when 'Reset'  then datenspeicherung.statistik_ausgabe(abrechnungen)
           when 'Reset'  then 'Stop'
+        
           end
           ende_button.text = next_txt
-          datenspeicherung.statistik_ausgabe
-#          File.open("daten.txt", File::RDWR + File::APPEND) do |file|
-#            file.puts "Kosten: #{'%5.2f' % abrechnungen.aktueller_preis}"
-#          end
         end
       end
 
@@ -81,7 +80,6 @@ begin
 
       #icons
       icon = Qt::Icon.new
-
       Abrechnungen::ARTIKEL_ARTEN.each do |artikel_art|
         zaehl_label = Qt::Label.new('0')
         zaehl_button = Qt::PushButton.new do
@@ -90,7 +88,6 @@ begin
             zaehl_label.text = abrechnungen.anzahl_genommen(artikel_art).to_s
           end
         end
-
         icon_dateiname = {
           :kaffee   => "icon_coffee.xpm",
           :getraenk => "coke.xpm",

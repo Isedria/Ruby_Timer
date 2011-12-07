@@ -8,8 +8,14 @@ class Abrechnungen < ZeitMesser
 
   ARTIKEL_ARTEN = [:kaffee, :getraenk, :kopie]
 
-  def initialize
-    super
+  def initialize(master_abrechnung = nil)
+    if master_abrechnung.nil?
+      puts "Wo ist mein Meister!!"
+    end
+
+    @master = master_abrechnung
+
+    super()
     @anzahlen = {
       :kaffee => 0,
       :kopie => 0,
@@ -48,5 +54,26 @@ class Abrechnungen < ZeitMesser
       summe += artikel_berechnungen(artikel)
     end
     zeit_berechnungen  + summe
+  end
+
+  def internet_preis
+    zeit_berechnungen
+  end
+
+  def getraenke_preis
+    artikel_berechnungen(:kaffee) + artikel_berechnungen(:getraenk)
+  end
+
+  def kopien_preis
+    artikel_berechnungen(:kopie)
+  end
+
+  def reset
+    super
+    @anzahlen = {
+      :kaffee => 0,
+      :kopie => 0,
+      :getraenk => 0,
+    }
   end
 end

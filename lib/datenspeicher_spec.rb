@@ -28,9 +28,10 @@ describe Datenspeicher do
       @ab.anzahl_genommen(:kaffee).should == 0
       @ab.benutzer_nimmt(:kaffee)
       @ab.anzahl_genommen(:kaffee).should == 1
-      @ab.aktueller_preis == 0.80
-      aktueller_preis = @ab.aktueller_preis
-
+      @ab.aktueller_preis.should == 0.80
+#      aktueller_internet_preis = @ab.internet_preis
+#      aktueller_getraenke_preis = @ab.getraenke_preis
+#      aktueller_kopien_preis = @ab.kopien_preis
   #    unsere_mock_datei = mock("Mock_Datei")
   #    unsere_mock_datei.should_receive(:print).with("00.80")
   #    unsere_mock_datei.should_receive(:puts)
@@ -40,8 +41,26 @@ describe Datenspeicher do
   #    File.should_receive(:open).and_yield(unsere_mock_datei)
   #    @ds.statistik_ausgabe(aktueller_preis)
   #    unsere_mock_datei.string.chomp.should == "00.80"
-      @ds.statistik_ausgabe(aktueller_preis)
-      File.read("daten.txt").should == "00.80\n"
+      @ds.statistik_ausgabe(@ab)
+      File.read("daten.txt").should == <<TextEnde
+[internetincome]
+00.30
+[drinksincome]
+00.50
+[printincome]
+00.00
+TextEnde
+
+      @ds.statistik_ausgabe([@ab, @ab])
+      File.read("daten.txt").should == <<TextEnde
+[internetincome]
+00.60
+[drinksincome]
+01.00
+[printincome]
+00.00
+TextEnde
+
     end
   end
 end

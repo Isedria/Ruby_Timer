@@ -1,1 +1,6 @@
-Kosten:  1,95
+[internetincome]
+00,00
+[drinksincome]
+10,40
+[printincome]
+01,65

@@ -28,6 +28,27 @@ class Abrechnungen < ZeitMesser
     }
   end
 
+  private
+  def fuege_aktuelle_daten_zum_master_hinzu
+    return if @master.nil?
+    ARTIKEL_ARTEN.each do |art|
+      anzahl_genommen(art).times{ @master.benutzer_nimmt(art) }
+    end    
+  end
+  
+  public
+  def reset
+    fuege_aktuelle_daten_zum_master_hinzu if @master
+    super
+    
+    @anzahlen = {
+      :kaffee => 0,
+      :kopie => 0,
+      :getraenk => 0,
+    }
+    "Reset OK"
+  end
+
   def zeit_berechnungen
     if dauer
       ((dauer / 5).round * 0.15)
@@ -68,12 +89,4 @@ class Abrechnungen < ZeitMesser
     artikel_berechnungen(:kopie)
   end
 
-  def reset
-    super
-    @anzahlen = {
-      :kaffee => 0,
-      :kopie => 0,
-      :getraenk => 0,
-    }
-  end
 end

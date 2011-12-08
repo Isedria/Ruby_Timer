@@ -51,7 +51,7 @@ describe Abrechnungen do
 
     it "sollte kaffee & Zeit abrechnen" do
       @ab.start
-      sleep 6
+      @ab.stub!(:dauer).and_return(6)
       @ab.stop
       @ab.anzahl_genommen(:kaffee).should == 0
       @ab.benutzer_nimmt(:kaffee)
@@ -81,7 +81,7 @@ describe Abrechnungen do
     it "sollte bei Reset alle Werte zum Master hinzufügen" do
       @master_ab.anzahl_genommen(:kopie).should == 0
       @master_ab.aktueller_preis.should == 0
-      #@master_ab.dauer_format.should == "00:00:00"
+      @master_ab.dauer_format.should == "- - : - - : - -"
 
       @ab.start
       sleep 1
@@ -102,11 +102,11 @@ describe Abrechnungen do
       @ab.reset
       @ab.anzahl_genommen(:kopie).should == 0
       @ab.aktueller_preis.should == 0
-      #@ab.dauer_format.should == "00:00:00"
+      @ab.dauer_format.should == "- - : - - : - -"
 
       @master_ab.anzahl_genommen(:kopie).should == 42
       @master_ab.aktueller_preis.should == 10.90
-      @master_ab.dauer_format.should == "00:00:01"
+      #@master_ab.dauer_format.should == "00:00:01"
     end
 
   end

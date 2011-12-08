@@ -1,6 +1,6 @@
 [internetincome]
 00,00
 [drinksincome]
-10,40
+01,50
 [printincome]
-01,65
+00,15

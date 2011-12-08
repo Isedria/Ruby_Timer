@@ -8,19 +8,6 @@ describe ZeitMesser do
     @zm = ZeitMesser.new
   end
 
-#
-#  it "sollte richtig resetten" do
-#    a = Time.now
-#    @zm.start
-#    sleep 6
-#    @zm.dauer.should == 6
-#    @zm.stop
-#    sleep 2
-#    @zm.dauer.should == 6
-#    @zm.reset
-#    @zm.dauer.should == 0
-#  end
-
   it "sollte Pause mchen können" do
     1.times do
       @zm.start

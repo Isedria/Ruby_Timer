@@ -20,9 +20,9 @@ begin
     haupt_layout = Qt::VBoxLayout.new do
       add_layout extra_buttons_layout
     end
-
+    master_abrechnung = Abrechnungen.new
     zeilen_anz.times do |zm_nr|
-      abrechnungen = Abrechnungen.new
+      abrechnungen = Abrechnungen.new(master_abrechnung)
       datenspeicherung = Datenspeicher.new
 
 
@@ -61,9 +61,9 @@ begin
 
           next_txt = case txt
           when 'Stop'  then 'Reset'
-          when 'Reset'  then datenspeicherung.statistik_ausgabe(abrechnungen)
-          when 'Reset'  then 'Stop'
-        
+          when 'Reset'  then
+            datenspeicherung.statistik_ausgabe(master_abrechnung)
+            "Stop"
           end
           ende_button.text = next_txt
         end

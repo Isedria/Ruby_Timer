@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'abrechnungen'
+require 'abrechnung'
 require 'datenspeicher'
 require 'Qt4'
 
@@ -20,9 +20,9 @@ begin
     haupt_layout = Qt::VBoxLayout.new do
       add_layout extra_buttons_layout
     end
-    master_abrechnung = Abrechnungen.new
+    master_abrechnung = Abrechnung.new
     zeilen_anz.times do |zm_nr|
-      abrechnungen = Abrechnungen.new(master_abrechnung)
+      abrechnung = Abrechnung.new(master_abrechnung)
       datenspeicherung = Datenspeicher.new
 
 
@@ -34,8 +34,8 @@ begin
       #Buttons
       zeit_anzeige = Qt::Timer.new(self) do
         connect(SIGNAL("timeout()")) do
-          zeit_label.text = abrechnungen.dauer_format
-          money_label.text = "%.2f €" % abrechnungen.aktueller_preis
+          zeit_label.text = abrechnung.dauer_format
+          money_label.text = "%.2f €" % abrechnung.aktueller_preis
         end
         self.start(200)
       end
@@ -43,7 +43,7 @@ begin
       start_button = Qt::PushButton.new('Start') do
         connect(SIGNAL('clicked()')) do
           txt = start_button.text
-          puts abrechnungen.send(txt.downcase)
+          puts abrechnung.send(txt.downcase)
 
           next_txt = {
             'Start'   => 'Pause',
@@ -57,7 +57,7 @@ begin
       ende_button = Qt::PushButton.new('Stop') do
          connect(SIGNAL('clicked()')) do
           txt = ende_button.text
-          puts abrechnungen.send(txt.downcase)
+          puts abrechnung.send(txt.downcase)
 
           next_txt = case txt
           when 'Stop'  then 'Reset'
@@ -80,12 +80,12 @@ begin
 
       #icons
       icon = Qt::Icon.new
-      Abrechnungen::ARTIKEL_ARTEN.each do |artikel_art|
+      Abrechnung::ARTIKEL_ARTEN.each do |artikel_art|
         zaehl_label = Qt::Label.new('0')
         zaehl_button = Qt::PushButton.new do
           connect(SIGNAL('clicked()')) do
-            abrechnungen.benutzer_nimmt(artikel_art)
-            zaehl_label.text = abrechnungen.anzahl_genommen(artikel_art).to_s
+            abrechnung.benutzer_nimmt(artikel_art)
+            zaehl_label.text = abrechnung.anzahl_genommen(artikel_art).to_s
           end
         end
         icon_dateiname = {

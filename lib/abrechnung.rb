@@ -1,7 +1,7 @@
 
 require 'zeit_messer'
 
-class Abrechnungen < ZeitMesser
+class Abrechnung < ZeitMesser
   
 
   attr_reader :kaffee_anzahl, :getraenke_anzahl, :kopie_anzahl
@@ -33,19 +33,20 @@ class Abrechnungen < ZeitMesser
     return if @master.nil?
     ARTIKEL_ARTEN.each do |art|
       anzahl_genommen(art).times{ @master.benutzer_nimmt(art) }
-    end    
+    end
+    
   end
   
   public
   def reset
     fuege_aktuelle_daten_zum_master_hinzu if @master
     super
-    
     @anzahlen = {
       :kaffee => 0,
       :kopie => 0,
       :getraenk => 0,
     }
+
     "Reset OK"
   end
 

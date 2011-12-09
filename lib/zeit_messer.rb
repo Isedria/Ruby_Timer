@@ -52,7 +52,7 @@ class ZeitMesser
     begin
       dauer_ungerundet.round
     rescue
-      nil
+      0
     end
   end
 

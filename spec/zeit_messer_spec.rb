@@ -54,6 +54,7 @@ describe ZeitMesser do
   end
 
   it "sollte bei kleinen Zeiten korrekte Dauer zurückgeben " do
+    @zm.dauer.should == 0
     a = Time.now
     @zm.start
 

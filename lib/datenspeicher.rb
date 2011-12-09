@@ -1,4 +1,4 @@
-require 'abrechnungen'
+require 'abrechnung'
 
 
 class Datenspeicher
@@ -11,7 +11,7 @@ class Datenspeicher
     abrechnungen_array = case abrechnungen_bzw_abr_array
     when Array then
       abrechnungen_bzw_abr_array
-    when Abrechnungen then
+    when Abrechnung then
       [abrechnungen_bzw_abr_array]
     else
       raise "Falscher Parameter (#{abrechnungen_bzw_abr_array.inspect})"

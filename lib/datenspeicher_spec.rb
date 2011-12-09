@@ -1,12 +1,12 @@
 
 require 'datenspeicher'
-require 'abrechnungen'
+require 'abrechnung'
 
 describe Datenspeicher do
   describe "mit Datei" do
     before(:each) do
       @ds = Datenspeicher.new
-      @ab = Abrechnungen.new
+      @ab = Abrechnung.new
       @ds.datei_erstellen
       File.exist?("daten.txt").should be_true
     end
@@ -16,7 +16,7 @@ describe Datenspeicher do
   describe "ohne Datei" do
     before(:each) do
       @ds = Datenspeicher.new
-      @ab = Abrechnungen.new
+      @ab = Abrechnung.new
       File.delete("daten.txt") if File.exist?("daten.txt")
     end
 

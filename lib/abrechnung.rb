@@ -26,16 +26,26 @@ class Abrechnung < ZeitMesser
       :kopie => 0.15,
       :getraenk => 1.30,
     }
+    @alter_internet_preis = 0
   end
 
+  def alter_internet_preis= alter_wert
+    @alter_internet_preis = alter_wert
+  end
+
+  def alter_internet_preis
+    @alter_internet_preis
+  end
+  
   private
   def fuege_aktuelle_daten_zum_master_hinzu
     return if @master.nil?
     ARTIKEL_ARTEN.each do |art|
       anzahl_genommen(art).times{ @master.benutzer_nimmt(art) }
     end
-    
+    @master.alter_internet_preis += zeit_berechnungen
   end
+
   
   public
   def reset
@@ -51,11 +61,7 @@ class Abrechnung < ZeitMesser
   end
 
   def zeit_berechnungen
-    if dauer
-      ((dauer / 5).round * 0.15)
-    else
-      0
-    end
+    ((dauer / 5).round * 0.15)
   end
 
   def benutzer_nimmt(genommener_artikel)
@@ -79,7 +85,7 @@ class Abrechnung < ZeitMesser
   end
 
   def internet_preis
-    zeit_berechnungen
+    ((@alter_internet_preis + zeit_berechnungen)*100).round / 100.0
   end
 
   def getraenke_preis

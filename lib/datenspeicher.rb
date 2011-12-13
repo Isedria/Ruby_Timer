@@ -3,6 +3,10 @@ require 'abrechnung'
 
 class Datenspeicher
 
+  def initialize
+    @date_format = Time.now.utc.strftime("%Y%m%d")
+  end
+
   def datei_erstellen
     File.open("daten.txt", "w"){}
   end
@@ -24,11 +28,11 @@ class Datenspeicher
     end
     File.open("daten.txt", "w") do |file|
       file.puts "[internetincome]"
-      file.puts "#{'%05.2f' % i}"
+      file.puts "#{@date_format}=#{'%05.2f' % i}"
       file.puts "[drinksincome]"
-      file.puts "#{'%05.2f' % g}"
+      file.puts "#{@date_format}=#{'%05.2f' % g}"
       file.puts "[printincome]"
-      file.puts "#{'%05.2f' % k}"
+      file.puts "#{@date_format}=#{'%05.2f' % k}"
     end
   end
 end

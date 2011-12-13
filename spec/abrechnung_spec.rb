@@ -3,6 +3,14 @@
 
 require 'abrechnung'
 
+class Object
+  def eigenclass
+    class << self
+      self
+    end
+  end
+end
+
 describe Abrechnung do
   describe "ohne Master" do
     before(:each) do
@@ -18,6 +26,28 @@ describe Abrechnung do
     it "sollte klicker richtig berechnen" do
 
       @ab.zeit_berechnungen.should == 0.00
+    end
+
+    it "sollte internet_preis ohne laufenden Timer speichern können" do
+      @ab.alter_internet_preis = 17.0
+      @ab.internet_preis.should == 17.0
+    end
+
+    it "sollte internet_preis mit laufendem Timer speichern können" do
+      @ab.start
+      @ab.stub!(:dauer).and_return(22)
+      @ab.stop
+      @ab.internet_preis.should == 0.60
+      puts @ab.internet_preis
+
+      @ab.alter_internet_preis = 17.0
+      @ab.internet_preis.should == 17.60
+
+
+      @ab.reset
+      puts @ab.internet_preis
+
+      #@ab.internet_preis.should == 0
     end
 
     it "sollte kaffee addieren" do
@@ -91,12 +121,12 @@ describe Abrechnung do
       42.times {@ab.benutzer_nimmt(:kopie)}
 
       @ab.anzahl_genommen(:kopie).should == 42
-      @ab.aktueller_preis.should == 10.90
+      (@ab.aktueller_preis - 10.90).abs.should < 0.00001
       @ab.dauer.should == 1
 
       @ab.stop
       @ab.anzahl_genommen(:kopie).should == 42
-      @ab.aktueller_preis.should == 10.90
+      (@ab.aktueller_preis - 10.90).abs.should < 0.00001
       @ab.dauer.should == 1
 
       @ab.reset
@@ -105,10 +135,45 @@ describe Abrechnung do
       @ab.dauer.should == 0
 
       @master_ab.anzahl_genommen(:kopie).should == 42
-      @master_ab.aktueller_preis.should == 10.90
-      @master_ab.dauer.should == 1
+      (@master_ab.aktueller_preis - 10.90).abs.should < 0.00001
+#      @master_ab.dauer.should == 1
     end
 
+    it "sollte internet_preis speichern können" do
+      @ab.start
+      @ab.stub!(:dauer).and_return(22)
+      @ab.stop
+      @ab.internet_preis.should == 0.60
+      puts @ab.internet_preis
+      puts @master_ab.internet_preis
+      @ab.reset
+      #@ab.internet_preis.should == 0
+      @master_ab.internet_preis.should == 0.60
+    end
+
+    it "sollte richtig resetten können" do
+      @ab.start
+      @ab.eigenclass.send :alias_method, :dauer_orig, :dauer
+      @ab.stub!(:dauer).and_return(22)
+      @ab.stop
+      @ab.internet_preis.should == 0.60
+  
+      @ab.internet_preis.should == 0.60
+
+      @ab.reset
+      @ab.eigenclass.send :alias_method, :dauer, :dauer_orig
+
+      @ab.internet_preis.should == 0
+      @master_ab.internet_preis.should == 0.60
+
+      @ab2 = Abrechnung.new(@master_ab)
+      @ab2.stub!(:dauer).and_return(44)
+      @ab2.internet_preis.should == 1.20
+
+      @ab2.reset
+      @master_ab.internet_preis.should == 1.80
+
+    end
   end
 end
 

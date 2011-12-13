@@ -11,8 +11,7 @@ begin
   haupt_fenster = Qt::Widget.new do
 
     self.window_title = 'Timer v1.0'
-    resize(200, 100)
-
+    resize(500, 100)
     zeilen_anz = 10
     
     extra_buttons_layout = Qt::VBoxLayout.new()
@@ -29,13 +28,14 @@ begin
       ## Label
       money_label = Qt::Label.new("0,00 €")
       zeit_label = Qt::Label.new('- - : - - : - -')
+      zeit_label.resize 30,20
       timer_nummer = Qt::Label.new("#{zm_nr}")
 
       #Buttons
       zeit_anzeige = Qt::Timer.new(self) do
         connect(SIGNAL("timeout()")) do
           zeit_label.text = abrechnung.dauer_format
-          money_label.text = "%.2f €" % abrechnung.aktueller_preis
+          money_label.text = "%7.2f €" % abrechnung.aktueller_preis
         end
         self.start(200)
       end
@@ -102,25 +102,32 @@ begin
         hlayout_extra_buttons.add_widget(zaehl_label, 0, Qt::AlignCenter)
       end
 
-      # Layouts  
+      # Layouts
+
       hlayout_timer_nummer = Qt::HBoxLayout.new do
-        add_widget(timer_nummer, 0, Qt::AlignLeft)
+        setContentsMargins(10, 0, 5, 0)
+        add_widget(timer_nummer, 0, Qt::AlignCenter)
       end
 
       hlayout_timer_show = Qt::HBoxLayout.new do
+        setContentsMargins(10, 0, 10, 0)
         add_widget(zeit_label, 0, Qt::AlignCenter)
       end
 
       hlayout_timer_buttons = Qt::HBoxLayout.new do
-        add_widget(start_button, 0, Qt::AlignLeft)
-        add_widget(ende_button, 0, Qt::AlignLeft)
+        setContentsMargins(10, 0, 10, 0)
+        add_widget(start_button, 0, Qt::AlignCenter)
+        add_widget(ende_button, 0, Qt::AlignCenter)
       end
 
       hlayout_money_show = Qt::HBoxLayout.new do
-        add_widget(money_label, 0, Qt::AlignCenter)
+        setContentsMargins(10, 0, 10, 0)
+        addStretch(0)
+        add_widget(money_label, 0, Qt::AlignRight)
       end
 
       vlayout_second = Qt::HBoxLayout.new do
+        setContentsMargins(10, 0, 10, 0)
         add_layout(hlayout_timer_nummer)
         add_layout(hlayout_timer_show)
         add_layout(hlayout_timer_buttons)

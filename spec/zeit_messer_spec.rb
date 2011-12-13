@@ -69,10 +69,14 @@ describe ZeitMesser do
     @zm.dauer.should == 0
   end
 
-  it "sollte nach einer Sekunde Dauer 1 haben" do
+  it "sollte nach einer Sekunde Dauer 1 haben und beim Reset wieder Null" do
     @zm.start
     sleep 1
     @zm.dauer.should == 1
+
+    @zm.stop
+    @zm.reset
+    @zm.dauer.should == 0
   end
 
   it "sollte korrekte Dauer zurückgeben wenn er von Anfang an läuft" do

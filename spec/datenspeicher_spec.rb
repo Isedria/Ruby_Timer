@@ -21,6 +21,7 @@ describe Datenspeicher do
     end
 
     it "sollte die richtigen Werte hinein schreiben" do
+      @date_format = Time.now.utc.strftime("%Y%m%d")
       @ab.start
       @ab.stub!(:dauer).and_return(12)
       @ab.zeit_berechnungen.should == 0.30
@@ -44,21 +45,21 @@ describe Datenspeicher do
       @ds.statistik_ausgabe(@ab)
       File.read("daten.txt").should == <<TextEnde
 [internetincome]
-00.30
+#{@date_format}=00.30
 [drinksincome]
-00.50
+#{@date_format}=00.50
 [printincome]
-00.00
+#{@date_format}=00.00
 TextEnde
 
       @ds.statistik_ausgabe([@ab, @ab])
       File.read("daten.txt").should == <<TextEnde
 [internetincome]
-00.60
+#{@date_format}=00.60
 [drinksincome]
-01.00
+#{@date_format}=01.00
 [printincome]
-00.00
+#{@date_format}=00.00
 TextEnde
 
     end

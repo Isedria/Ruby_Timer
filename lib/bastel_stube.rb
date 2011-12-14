@@ -88,13 +88,13 @@ begin
             zaehl_label.text = abrechnung.anzahl_genommen(artikel_art).to_s
           end
         end
-        icon_dateiname = {
-          :kaffee   => "icon_coffee.xpm",
+        dateiname = {
+          :kaffee   => "coffee.xpm",
           :getraenk => "coke.xpm",
-          :kopie    => "icon_print.xpm"
+          :kopie    => "print.xpm"
         }[artikel_art]
-        if icon_dateiname
-          icon.addPixmap(Qt::Pixmap.new("icons/"+icon_dateiname), Qt::Icon::Normal, Qt::Icon::Off)
+        if dateiname
+          icon.addPixmap(Qt::Pixmap.new("icons/"+dateiname), Qt::Icon::Normal, Qt::Icon::Off)
         end
         zaehl_button.icon = icon
 

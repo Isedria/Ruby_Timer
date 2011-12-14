@@ -36,7 +36,7 @@ loop do    #Hauptschleife
       when "z" then puts abr[zm_nr].zeit_berechnungen
       when "c" then puts abr[zm_nr].benutzer_nimmt(:kaffee)
       when "g" then puts abr[zm_nr].aktueller_preis
-      when "a" then puts abr[zm_nr].statistik_ausgabe
+      when "a" then puts abr[zm_nr].statistik_ausgabe # veraltet
       when "i" then 
         10.times {|zeilen_nummer|
           print zeilen_nummer.to_s.center(2)

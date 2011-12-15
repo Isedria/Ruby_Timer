@@ -8,16 +8,27 @@ describe Datenspeicher do
       @ds = Datenspeicher.new
       @ab = Abrechnung.new
       @ds.datei_erstellen
-      File.exist?("daten.txt").should be_true
+      File.exist?(Datenspeicher::STATISTIK_VOLLER_DATEINAME).should be_true
     end
 
-  end
+    it "sollte Datei richtig lesen uns ausgeben" do
+      daten_inhalt = IO.foreach(Datenspeicher::STATISTIK_VOLLER_DATEINAME) { |line| puts line }
+      @ds.statistik_eingabe.should == daten_inhalt
+    end
 
+#  it "sollte Datei richtig lesen" do
+#      @ab.start
+#      @ab.stub!(:dauer).and_return(12)
+#      @ab.zeit_berechnungen.should == 0.30
+#      @ab.aktueller_preis == 0.30
+#      @ab.reset
+#  end
+  end
   describe "ohne Datei" do
     before(:each) do
       @ds = Datenspeicher.new
       @ab = Abrechnung.new
-      File.delete("daten.txt") if File.exist?("daten.txt")
+      File.delete(Datenspeicher::STATISTIK_VOLLER_DATEINAME) if File.exist?(Datenspeicher::STATISTIK_VOLLER_DATEINAME)
     end
 
     it "sollte die richtigen Werte hinein schreiben" do
@@ -43,7 +54,7 @@ describe Datenspeicher do
   #    @ds.statistik_ausgabe(aktueller_preis)
   #    unsere_mock_datei.string.chomp.should == "00.80"
       @ds.statistik_ausgabe(@ab)
-      File.read("daten.txt").should == <<TextEnde
+      File.read(Datenspeicher::STATISTIK_VOLLER_DATEINAME).should == <<TextEnde
 [internetincome]
 #{@date_format}=00.30
 [drinksincome]
@@ -53,7 +64,7 @@ describe Datenspeicher do
 TextEnde
 
       @ds.statistik_ausgabe([@ab, @ab])
-      File.read("daten.txt").should == <<TextEnde
+      File.read(Datenspeicher::STATISTIK_VOLLER_DATEINAME).should == <<TextEnde
 [internetincome]
 #{@date_format}=00.60
 [drinksincome]
